@@ -12,7 +12,7 @@ provider "azurerm" {
   }
 }
 
-resource "azurerm_resource_group" "rg" {
+resource "azurerm_resource_grou" "rg" {
   name     = "prattestonee"
   location = "westeurope"
 }
