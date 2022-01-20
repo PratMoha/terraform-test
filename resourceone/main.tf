@@ -13,7 +13,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "prattestone"
+  name     = "prattestonee"
   location = "westeurope"
 }
 
