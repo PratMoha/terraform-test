@@ -1,6 +1,13 @@
 name: Terraform Apply
 
 on: push
+  workflow_dispatch: 
+    inputs: 
+      environmentsvars: 
+        description: 'Release ennv'
+        required: true
+        default: 'NonProd'
+        
 
 defaults:
   run:

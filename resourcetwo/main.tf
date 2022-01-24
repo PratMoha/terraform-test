@@ -12,7 +12,7 @@ provider "azurerm" {
   }
 }
 
-resource "azurerm_resource_grou" "rg" {
+resource "azurerm_resource_group" "rg" {
   name     = "prattesttwo"
   location = "westeurope"
 }
@@ -44,6 +44,33 @@ data "azurerm_subnet" "vmsubnet"{
   resource_group_name = "prestest"
 }
 
+resource "azurerm_subnet" "integrationsubnetnew" {
+  name                 = "integrationsubnetnew"
+  resource_group_name  = "prestest"
+  virtual_network_name = "netpratyush"
+  address_prefixes     = ["10.0.5.0/24"]
+  service_endpoints = ["Microsoft.Web"]
+  delegation {
+    name = "delegation"
+    service_delegation {
+      name = "Microsoft.Web/serverFarms"
+    }
+  }
+}
+
+resource "azurerm_subnet" "integrationsubnetnew1" {
+  name                 = "integrationsubnetnew1"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnetfe.name
+  address_prefixes     = ["10.0.5.0/24"]
+  service_endpoints = ["Microsoft.Web"]
+  delegation {
+    name = "delegation"
+    service_delegation {
+      name = "Microsoft.Web/serverFarms"
+    }
+  }
+}
 
 resource "azurerm_virtual_network" "vnetbe" {
   name                = "vnetbe"
@@ -92,7 +119,7 @@ resource "azurerm_app_service_plan" "appserviceplanbe" {
 }
 
 resource "azurerm_app_service" "frontwebapp" {
-  name                = "frontwebapp2020081011"
+  name                = "frontwebapp202008101122"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   app_service_plan_id = azurerm_app_service_plan.appserviceplanfe.id
@@ -112,7 +139,7 @@ resource "azurerm_app_service_virtual_network_swift_connection" "vnetintegration
 }
 
 resource "azurerm_app_service" "backwebapp" {
-  name                = "backwebapp2020081011"
+  name                = "backwebapp202008101122"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   app_service_plan_id = azurerm_app_service_plan.appserviceplanbe.id
